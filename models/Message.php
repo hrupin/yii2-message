@@ -58,6 +58,7 @@ class Message extends \yii\db\ActiveRecord
             [['text'], 'string'],
             [['theme', 'name'], 'string', 'max' => 500],
             [['email', 'phone'], 'string', 'max' => 50],
+            ['email','email'],
             ['created_at', 'default', 'value' => time()],
             ['updated_at', 'default', 'value' => time()],
         ];
@@ -91,14 +92,14 @@ class Message extends \yii\db\ActiveRecord
         return $this->hasOne(self::className(), ['id' => 'parent_id']);
     }
 
-    public function getChildren()
+    public function getChildrenList()
     {
         return $this->hasMany(self::className(), ['parent_id' => 'id']);
     }
 
     public function getDate()
     {
-        return date('d.m.Y', $this->updated_at);
+        return date('Y-m-d H:i:s', $this->updated_at);
     }
 
     /**

@@ -13,7 +13,7 @@ class MessageQuery extends ActiveQuery
 {
 
     public function getAllMessages($id){
-        return $this->andWhere(['OR', 'sender = '.$id, 'recipient = '.$id]);
+        return $this->andWhere(['OR', 'sender = '.$id, 'recipient = '.$id])->andWhere(['parent_id' => 0]);
     }
 
     public function getNewMessages($id){
@@ -27,7 +27,7 @@ class MessageQuery extends ActiveQuery
                 'recipient' => $id,
                 'status_recipient' => Message::MESSAGE_NOT_READ
             ]
-        ]);
+        ])->andWhere(['parent_id' => 0]);
     }
 
     public function getReadMessages($id){
@@ -41,7 +41,7 @@ class MessageQuery extends ActiveQuery
                 'recipient' => $id,
                 'status_recipient' => Message::MESSAGE_READ
             ]
-        ]);
+        ])->andWhere(['parent_id' => 0]);
     }
 
     /**

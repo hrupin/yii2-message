@@ -2,14 +2,16 @@
 
 namespace hrupin\message\widgets;
 
-use hrupin\message\models\Message;
 use Yii;
 use yii\base\Widget;
+use hrupin\message\WidgetsMessageAsset;
+use hrupin\message\models\Message;
 use yii\base\InvalidConfigException;
+
 /**
- * Class Reviews
+ * Class Message
  *
- * @package hrupin\reviews\widgets
+ * @package hrupin\message\widgets
  */
 class SendMessage extends Widget
 {
@@ -58,19 +60,19 @@ class SendMessage extends Widget
         }
 
         if($this->theme === null){
-            $this->theme = '';
+            $this->theme = Yii::t('message', 'No theme');
         }
 
         if($this->name === null){
-            $this->name = '';
+            $this->name = Yii::t('message', 'No name');
         }
 
         if($this->email === null){
-            $this->email = '';
+            $this->email = Yii::t('message', 'No email');
         }
 
         if($this->phone === null){
-            $this->phone = '';
+            $this->phone = Yii::t('message', 'No phone');
         }
 
     }
@@ -81,6 +83,7 @@ class SendMessage extends Widget
      */
     public function run()
     {
+        $this->registerAssets();
         $class = Yii::$app->getModule('message')->modelMap['Message'];
         $model = Yii::createObject($class::className());
         $model->sender = $this->idSender;
@@ -96,5 +99,14 @@ class SendMessage extends Widget
         return $this->render('sendMessage',[
             'model' => $model
         ]);
+    }
+
+    /**
+     * Register assets.
+     */
+    protected function registerAssets()
+    {
+        $view = $this->getView();
+        $bundle = WidgetsMessageAsset::register($view);
     }
 }

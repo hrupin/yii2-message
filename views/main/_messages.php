@@ -1,5 +1,6 @@
 <?php
 
+use yii\helpers\Url;
 use hrupin\message\MessageAsset;
 
 /* @var $this yii\web\View */
@@ -28,11 +29,16 @@ MessageAsset::register($this);
                 foreach ($model as $item){
                     echo '<tr>';
                     echo '<td></td>';
-                    echo '<td></td>';
-                    echo '<td></td>';
-                    echo '<td></td>';
-                    echo '<td></td>';
-                    echo '<td></td>';
+                    echo '<td>'.$item->id.'</td>';
+                    echo '<td><time class="timeago" datetime="'.$item->date.'">'.$item->date.'</time></td>';
+                    echo '<td>'.$item->name.'</td>';
+                    echo '<td>'.$item->theme.'</td>';
+                    echo '<td>';
+                    if(($item->sender == Yii::$app->user->id) || ($item->recipient == Yii::$app->user->id && $item->status_recipient == \hrupin\message\models\Message::MESSAGE_READ)){
+                        echo '<a href="'.Url::toRoute(['/message/main/correspondence', 'id' => $item->id]).'">'.Yii::t('message', 'Answer').'</a>';
+                    }
+
+                    echo '</td>';
                     echo '</tr>';
                 }
             ?>

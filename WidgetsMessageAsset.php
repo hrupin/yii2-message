@@ -8,7 +8,7 @@ use yii\web\AssetBundle;
  *
  * @package hrupin\message
  */
-class MessageAsset extends AssetBundle
+class WidgetsMessageAsset extends AssetBundle
 {
     /**
      * @inheritdoc
@@ -19,17 +19,13 @@ class MessageAsset extends AssetBundle
      * @inheritdoc
      */
     public $js = [
-        'js/bootstrap-table.js',
-        'js//jquery.timeago.js',
-        'js/app.js'
+        'js/message.js'
     ];
 
     /**
      * @inheritdoc
      */
     public $css = [
-        'css/bootstrap-table.css',
-        'css/message.css'
     ];
 
     /**

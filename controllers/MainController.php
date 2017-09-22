@@ -2,6 +2,7 @@
 
 namespace hrupin\message\controllers;
 
+use hrupin\message\models\Message;
 use Yii;
 use yii\base\Controller;
 
@@ -23,6 +24,32 @@ class MainController extends Controller
             'all' => $allMessage,
             'new' => $newMessage,
             'read' => $readMessage
+        ]);
+    }
+
+    public function actionCorrespondence(){
+        $class = Yii::$app->getModule('message')->modelMap['Message'];
+        $model = Yii::createObject($class::className());
+        $message = $model->find()->where([
+            'id' => Yii::$app->request->get('id')
+        ])->limit(1)->one();
+        $model->sender = Yii::$app->user->id;
+        $model->recipient = $message->sender;
+        $model->theme = $message->theme;
+        $model->parent_id = $message->id;
+        $model->status_sender = Message::MESSAGE_READ;
+        $model->status_recipient = Message::MESSAGE_NOT_READ;
+
+        if(Yii::$app->request->isPost){
+            if($model->load(Yii::$app->request->post()) && $model->save()){
+
+            }
+        }
+
+
+        return $this->render('correspondence', [
+            'message' => $message,
+            'model' => $model
         ]);
     }
 
