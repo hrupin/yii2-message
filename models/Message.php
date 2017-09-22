@@ -24,6 +24,11 @@ use Yii;
  */
 class Message extends \yii\db\ActiveRecord
 {
+
+    const MESSAGE_NOT_READ = 1;
+    const MESSAGE_READ = 2;
+    const MESSAGE_DELETE = 3;
+
     /**
      * @inheritdoc
      */
@@ -32,16 +37,29 @@ class Message extends \yii\db\ActiveRecord
         return 'message';
     }
 
+    public function beforeSave($insert)
+    {
+        if (parent::beforeSave($insert)) {
+            $this->updated_at = time();
+            return true;
+        }
+        return false;
+    }
+
+
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
+            [['name', 'email', 'phone', 'theme', 'text'], 'required'],
             [['sender', 'recipient', 'status_sender', 'status_recipient', 'parent_id', 'children', 'created_at', 'updated_at'], 'integer'],
             [['text'], 'string'],
             [['theme', 'name'], 'string', 'max' => 500],
             [['email', 'phone'], 'string', 'max' => 50],
+            ['created_at', 'default', 'value' => time()],
+            ['updated_at', 'default', 'value' => time()],
         ];
     }
 
@@ -67,4 +85,29 @@ class Message extends \yii\db\ActiveRecord
             'updated_at' => 'Updated At',
         ];
     }
+
+    public function getParent()
+    {
+        return $this->hasOne(self::className(), ['id' => 'parent_id']);
+    }
+
+    public function getChildren()
+    {
+        return $this->hasMany(self::className(), ['parent_id' => 'id']);
+    }
+
+    public function getDate()
+    {
+        return date('d.m.Y', $this->updated_at);
+    }
+
+    /**
+     * @inheritdoc
+     * @return MessageQuery the active query used by this AR class.
+     */
+    public static function find()
+    {
+        return new MessageQuery(get_called_class());
+    }
+
 }

@@ -1,5 +1,5 @@
 <?php
-namespace hrupin\reviews;
+namespace hrupin\message;
 
 use yii\base\Module as BaseModule;
 

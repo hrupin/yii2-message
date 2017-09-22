@@ -1,5 +1,5 @@
 <?php
-namespace hrupin\reviews;
+namespace hrupin\message;
 
 use Yii;
 use yii\i18n\PhpMessageSource;
