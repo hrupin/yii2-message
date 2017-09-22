@@ -28,4 +28,9 @@ Usage
 Once the extension is installed, simply use it in your code by  :
 
 ```php
-<?= \hrupin\message\AutoloadExample::widget(); ?>```
+<?= \hrupin\message\widgets\SendMessage::widget([
+    'idRecipient' => 12,
+    'idSender' => Yii::$app->user->id,
+    'theme' => 'Супер товар'
+]); ?>
+```
