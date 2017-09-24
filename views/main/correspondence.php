@@ -53,15 +53,29 @@ function generateMyHtml($obj){
 <?= $form->field($model, 'text', [
     'template' => '<div class="row"><div class="col-md-3">{label}</div><div class="col-md-9"> {input}{error}{hint}</div></div>'
 ])->textarea(); ?>
-<?= $form->field($model, 'name', [
-    'template' => '<div class="row"><div class="col-md-3">{label}</div><div class="col-md-9"> {input}{error}{hint}</div></div>'
-])->textInput(); ?>
-<?= $form->field($model, 'email', [
-    'template' => '<div class="row"><div class="col-md-3">{label}</div><div class="col-md-9"> {input}{error}{hint}</div></div>'
-])->textInput(); ?>
-<?= $form->field($model, 'phone', [
-    'template' => '<div class="row"><div class="col-md-3">{label}</div><div class="col-md-9"> {input}{error}{hint}</div></div>'
-])->textInput(); ?>
+<?php
+if(!$model->name){
+    echo $form->field($model, 'name')->textInput(['placeholder' => Yii::t('message', 'Username')])->label(false);
+}
+else{
+    echo $form->field($model, 'name')->hiddenInput()->label(false);
+    echo '<a href="javascript:void(0);" class="onInput" data-input="message-name">'.$model->name.'</a>';
+}
+if(!$model->email){
+    echo $form->field($model, 'email')->textInput(['placeholder' => Yii::t('message', 'email')])->label(false);
+}
+else{
+    echo $form->field($model, 'email')->hiddenInput()->label(false);
+    echo '<a href="javascript:void(0);" class="onInput" data-input="message-email">'.$model->email.'</a>';
+}
+if(!$model->phone){
+    echo $form->field($model, 'phone')->textInput(['placeholder' => Yii::t('message', 'Phone')])->label(false);
+}
+else{
+    echo $form->field($model, 'phone')->hiddenInput()->label(false);
+    echo '<a href="javascript:void(0);" class="onInput" data-input="message-phone">'.$model->phone.'</a>';
+}
+?>
 
 <div class="form-group">
     <?= Html::submitButton(Yii::t('message', 'Submit'), ['class' => 'btn btn-primary pull-right']) ?>

@@ -29,7 +29,12 @@ var MaskPhone = {
     }
 };
 document.getElementById('message-phone').oninput = MaskPhone.mask;
-
 jQuery(document).ready(function() {
-    jQuery("time.timeago").timeago();
+    // jQuery("time.timeago").timeago();
+});
+
+$('.onInput').on('click', function () {
+    var idInput = $(this).attr('data-input');
+    $('#'+idInput).attr('type', 'text');
+    this.style.display = 'none';
 });

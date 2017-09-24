@@ -60,19 +60,19 @@ class SendMessage extends Widget
         }
 
         if($this->theme === null){
-            $this->theme = Yii::t('message', 'No theme');
+            $this->theme = '';
         }
 
         if($this->name === null){
-            $this->name = Yii::t('message', 'No name');
+            $this->name = '';
         }
 
         if($this->email === null){
-            $this->email = Yii::t('message', 'No email');
+            $this->email = '';
         }
 
         if($this->phone === null){
-            $this->phone = Yii::t('message', 'No phone');
+            $this->phone = '';
         }
 
     }

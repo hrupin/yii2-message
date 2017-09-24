@@ -38,6 +38,9 @@ MessageAsset::register($this);
                         echo '<a href="'.Url::toRoute(['/message/main/correspondence', 'id' => $item->id]).'">'.Yii::t('message', 'Answer').'</a>';
                     }
 
+                    if($item->recipient == Yii::$app->user->id && $item->status_recipient == \hrupin\message\models\Message::MESSAGE_NOT_READ){
+                        echo '<a href="'.Url::toRoute(['/message/main/correspondence', 'id' => $item->id]).'">'.Yii::t('message', 'View').'</a>';
+                    }
                     echo '</td>';
                     echo '</tr>';
                 }

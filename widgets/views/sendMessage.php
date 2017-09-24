@@ -24,36 +24,44 @@ use yii\widgets\ActiveForm;
                         <?php $form = ActiveForm::begin([
                             'action' => Url::toRoute('/message/main/send'),
                             'options' => [
-                                //'class' => 'form-horizontal',
                                 'data-pjax' => true
                             ],
-                            'fieldConfig' => [
-                                //'template' => '<div class="col-md-3">{label}</div><div class="col-md-9">{input}</div><div class="col-md-9 col-md-offset-3">{error}</div>',
-                            ],
                         ]); ?>
+                            <?php
+                                if(!$model->name){
+                                    echo $form->field($model, 'name')->textInput(['placeholder' => Yii::t('message', 'Username')])->label(false);
+                                }
+                                else{
+                                    echo $form->field($model, 'name')->hiddenInput()->label(false);
+                                    echo '<a href="javascript:void(0);" class="onInput" data-input="message-name">'.$model->name.'</a>';
+                                }
+                                if(!$model->email){
+                                    echo $form->field($model, 'email')->textInput(['placeholder' => Yii::t('message', 'email')])->label(false);
+                                }
+                                else{
+                                    echo $form->field($model, 'email')->hiddenInput()->label(false);
+                                    echo '<a href="javascript:void(0);" class="onInput" data-input="message-email">'.$model->email.'</a>';
+                                }
+                                if(!$model->phone){
+                                    echo $form->field($model, 'phone')->textInput(['placeholder' => Yii::t('message', 'Phone')])->label(false);
+                                }
+                                else{
+                                    echo $form->field($model, 'phone')->hiddenInput()->label(false);
+                                    echo '<a href="javascript:void(0);" class="onInput" data-input="message-phone">'.$model->phone.'</a>';
+                                }
+                            ?>
                             <?= $form->field($model, 'theme', [
                                     'template' => '<div class="row"><div class="col-md-3">{label}</div><div class="col-md-9"> {input}{error}{hint}</div></div>'
                             ])->textInput(['options' => ['class' =>  'form-inline']]); ?>
                             <?= $form->field($model, 'text', [
                                 'template' => '<div class="row"><div class="col-md-3">{label}</div><div class="col-md-9"> {input}{error}{hint}</div></div>'
                             ])->textarea(); ?>
-                            <?= $form->field($model, 'name', [
-                                'template' => '<div class="row"><div class="col-md-3">{label}</div><div class="col-md-9"> {input}{error}{hint}</div></div>'
-                            ])->textInput(); ?>
-                            <?= $form->field($model, 'email', [
-                                'template' => '<div class="row"><div class="col-md-3">{label}</div><div class="col-md-9"> {input}{error}{hint}</div></div>'
-                            ])->textInput(); ?>
-                            <?= $form->field($model, 'phone', [
-                                'template' => '<div class="row"><div class="col-md-3">{label}</div><div class="col-md-9"> {input}{error}{hint}</div></div>'
-                            ])->textInput(); ?>
-
                             <?= $form->field($model, 'sender')->hiddenInput()->label(false); ?>
                             <?= $form->field($model, 'recipient')->hiddenInput()->label(false); ?>
                             <?= $form->field($model, 'parent_id')->hiddenInput()->label(false); ?>
                             <?= $form->field($model, 'children')->hiddenInput()->label(false); ?>
                             <?= $form->field($model, 'status_sender')->hiddenInput()->label(false); ?>
                             <?= $form->field($model, 'status_recipient')->hiddenInput()->label(false); ?>
-
                             <div class="form-group">
                                 <?= Html::submitButton(Yii::t('message', 'Submit'), ['class' => 'btn btn-primary pull-right']) ?>
                             </div>

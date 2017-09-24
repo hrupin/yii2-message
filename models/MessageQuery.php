@@ -13,7 +13,9 @@ class MessageQuery extends ActiveQuery
 {
 
     public function getAllMessages($id){
-        return $this->andWhere(['OR', 'sender = '.$id, 'recipient = '.$id])->andWhere(['parent_id' => 0]);
+        return $this->andWhere(['OR', 'sender = '.$id, 'recipient = '.$id])
+            ->andWhere(['parent_id' => 0])
+            ->orderBy(['status_recipient' => SORT_DESC, 'status_sender' => SORT_DESC, 'id' => SORT_DESC]);
     }
 
     public function getNewMessages($id){
